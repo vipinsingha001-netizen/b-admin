@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: Medio;
+  src: url("../public/Medio.otf");
+}
+
+.font-medio {
+  font-family: Medio;
+}
+
+
+
+.bg-clip-text {
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes vibrate {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.animate-vibrate {
+  animation: vibrate 0.5s ease-in-out 1;
+}
+
+html,
+body {
+  width: 100vw;
+  scroll-behavior: smooth; /* Enables smooth scrolling */
+  overflow-x: hidden; /* Prevents unwanted horizontal scroll */
+}
+
+.blink {
+  animation: blinkAnim 1s infinite;
+}
+
+@keyframes blinkAnim {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
