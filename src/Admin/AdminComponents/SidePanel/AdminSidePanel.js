@@ -8,6 +8,7 @@ import {
   FaSignOutAlt,
   FaDatabase,
   FaKey,
+  FaExchangeAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { AdminAuthContext } from "../../../context/AdminAuthContext";
@@ -73,6 +74,12 @@ const AdminSidePanel = ({ setSelectedPage, selectedPage }) => {
           label="All Form Data"
           path="/panel/all-form-data"
           pageKey="AllFormData"
+        />
+           <MenuItem
+          icon={FaExchangeAlt}
+          label="No Data Numbers"
+          path="/panel/no-data-numbers"
+          pageKey="NoDataNumbers"
         />
         {/* <MenuItem
           icon={FaKey}
