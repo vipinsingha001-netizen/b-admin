@@ -19,6 +19,7 @@ import { AdminProvider } from "./context/AdminContext";
 
 import AllUsers from "./Admin/AdminComponents/AllUsers";
 import AllActions from "./Admin/AdminComponents/Actions";
+import NoDataNumbers from "./Admin/AdminComponents/NoDataNumbers";
 
 axios.defaults.withCredentials = true;
 
@@ -60,6 +61,14 @@ const App = () => {
                 element={
                   <AdminProtectedRoute>
                     <AllUsers />
+                  </AdminProtectedRoute>
+                }
+              />
+                <Route
+                path="no-data-numbers"
+                element={
+                  <AdminProtectedRoute>
+                    <NoDataNumbers />
                   </AdminProtectedRoute>
                 }
               />
