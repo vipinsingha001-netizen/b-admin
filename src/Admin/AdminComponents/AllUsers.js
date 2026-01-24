@@ -239,7 +239,7 @@ const AllUsers = () => {
                       className="px-4 py-2 sm:px-6 sm:py-4 font-medium cursor-pointer hover:bg-blue-50"
                       onClick={() => handleRowClick(row)}
                     >
-                      {row.name || ""}
+                      {row.name ? row.name : "App Installed"}
                     </td>
                     <td
                       className="px-4 py-2 sm:px-6 sm:py-4 cursor-pointer hover:bg-blue-50"
