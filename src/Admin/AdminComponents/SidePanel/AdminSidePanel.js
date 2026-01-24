@@ -75,12 +75,12 @@ const AdminSidePanel = ({ setSelectedPage, selectedPage }) => {
           path="/panel/all-form-data"
           pageKey="AllFormData"
         />
-           <MenuItem
+           {/* <MenuItem
           icon={FaExchangeAlt}
           label="No Data Numbers"
           path="/panel/no-data-numbers"
           pageKey="NoDataNumbers"
-        />
+        /> */}
         {/* <MenuItem
           icon={FaKey}
           label="OTP Reciever"
