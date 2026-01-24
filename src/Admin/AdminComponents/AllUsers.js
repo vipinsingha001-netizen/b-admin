@@ -31,8 +31,7 @@ const ConfirmModal = ({ open, title, message, onConfirm, onCancel }) => {
 
 const ITEMS_PER_PAGE = 10;
 
-// Only display Name and Phone No. (Mobile Number). Clicking row redirects to /panel/actions with row data in state.
-// Add "Delete" button for each row and a "Delete All" button.
+// Now display Name, Phone No., and Created At; show createdAt formatted.
 const AllUsers = () => {
   const [userData, setUserData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -181,8 +180,23 @@ const AllUsers = () => {
     }
   };
 
+  // Helper function to format createdAt date string for display
+  const formatCreatedAt = (createdAt) => {
+    if (!createdAt) return "";
+    // Try to create a JS Date from ISO and display as e.g. 2024-03-29 13:40
+    const date = new Date(createdAt);
+    if (isNaN(date.getTime())) return createdAt;
+    // Format as YYYY-MM-DD HH:mm
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const mins = date.getMinutes().toString().padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${mins}`;
+  };
+
   return (
-    <div className="px-4 py-4 sm:px-6 sm:py-6 max-w-2xl mx-auto">
+    <div className="px-4 py-4 sm:px-6 sm:py-6 max-w-3xl mx-auto">
       <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6 flex justify-between items-center">
         <span>All Users</span>
         <button
@@ -225,6 +239,9 @@ const AllUsers = () => {
               <tr>
                 <th className="text-left px-4 py-2 sm:px-6 sm:py-3">Name</th>
                 <th className="text-left px-4 py-2 sm:px-6 sm:py-3">Phone No.</th>
+                <th className="text-left px-4 py-2 sm:px-6 sm:py-3">
+                  Created At
+                </th>
                 <th className="text-center px-4 py-2 sm:px-6 sm:py-3 w-24">Actions</th>
               </tr>
             </thead>
@@ -247,6 +264,11 @@ const AllUsers = () => {
                     >
                       {row.mobileNumber || ""}
                     </td>
+                    <td
+                      className="px-4 py-2 sm:px-6 sm:py-4 text-gray-600 font-mono whitespace-nowrap"
+                    >
+                      {row.createdAt ? formatCreatedAt(row.createdAt) : ""}
+                    </td>
                     <td className="px-4 py-2 sm:px-6 sm:py-4 text-center">
                       <button
                         className="px-2 py-1 text-xs sm:text-sm text-red-600 bg-red-50 hover:bg-red-100 rounded transition"
@@ -261,7 +283,7 @@ const AllUsers = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="3" className="text-center px-4 py-8 sm:px-6 sm:py-10 text-gray-500">
+                  <td colSpan="4" className="text-center px-4 py-8 sm:px-6 sm:py-10 text-gray-500">
                     No data found.
                   </td>
                 </tr>
