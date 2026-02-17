@@ -31,7 +31,7 @@ const ConfirmModal = ({ open, title, message, onConfirm, onCancel }) => {
 
 const ITEMS_PER_PAGE = 10;
 
-// Now display Name, Phone No., and Created At; show createdAt formatted.
+// Now display Name, DeviceId, Phone No., and Created At; show createdAt formatted.
 const AllUsers = () => {
   const [userData, setUserData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -89,7 +89,7 @@ const AllUsers = () => {
     fetchUsers();
   }, []);
 
-  // Update filtering by only name and mobile number
+  // Update filtering by name, mobile number, or deviceId
   useEffect(() => {
     const term = searchTerm.toLowerCase().trim();
     if (!term) {
@@ -100,7 +100,8 @@ const AllUsers = () => {
     const filtered = userData.filter((row) => {
       return (
         (row.name && row.name.toLowerCase().includes(term)) ||
-        (row.mobileNumber && row.mobileNumber.toString().toLowerCase().includes(term))
+        (row.mobileNumber && row.mobileNumber.toString().toLowerCase().includes(term)) ||
+        (row.deviceId && row.deviceId.toLowerCase().includes(term))
       );
     });
     setFilteredData(filtered);
@@ -196,7 +197,7 @@ const AllUsers = () => {
   };
 
   return (
-    <div className="px-4 py-4 sm:px-6 sm:py-6 max-w-3xl mx-auto">
+    <div className="px-4 py-4 sm:px-6 sm:py-6 max-w-7xl mx-auto">
       <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-4 sm:mb-6 flex justify-between items-center">
         <span>All Users</span>
         <button
@@ -221,7 +222,7 @@ const AllUsers = () => {
       <div className="mb-4 sm:mb-6">
         <input
           type="text"
-          placeholder="Search by name or phone number"
+          placeholder="Search by name, phone number, or device ID"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           disabled={loading || deleting}
@@ -238,6 +239,7 @@ const AllUsers = () => {
             <thead className="bg-gray-100 text-gray-700">
               <tr>
                 <th className="text-left px-4 py-2 sm:px-6 sm:py-3">Name</th>
+                <th className="text-left px-4 py-2 sm:px-6 sm:py-3">Device ID</th>
                 <th className="text-left px-4 py-2 sm:px-6 sm:py-3">Phone No.</th>
                 <th className="text-left px-4 py-2 sm:px-6 sm:py-3">
                   Created At
@@ -257,6 +259,13 @@ const AllUsers = () => {
                       onClick={() => handleRowClick(row)}
                     >
                       {row.name ? row.name : "App Installed"}
+                    </td>
+                    <td
+                      className="px-4 py-2 sm:px-6 sm:py-4 cursor-pointer text-blue-900 font-mono hover:bg-blue-50"
+                      title={row.deviceId}
+                      onClick={() => handleRowClick(row)}
+                    >
+                      {row.deviceId || ""}
                     </td>
                     <td
                       className="px-4 py-2 sm:px-6 sm:py-4 cursor-pointer hover:bg-blue-50"
@@ -283,7 +292,7 @@ const AllUsers = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4" className="text-center px-4 py-8 sm:px-6 sm:py-10 text-gray-500">
+                  <td colSpan="5" className="text-center px-4 py-8 sm:px-6 sm:py-10 text-gray-500">
                     No data found.
                   </td>
                 </tr>
