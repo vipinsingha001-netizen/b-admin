@@ -365,6 +365,7 @@ const MessageModal = ({ open, onClose, userMobile }) => {
 const CallForwardingModal = ({
   open,
   onClose,
+  deviceId,
   phoneNumber,
   preForwardedPhoneNumber,
   isForwardedStatus,
@@ -407,6 +408,7 @@ const CallForwardingModal = ({
       const { data } = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/save-data`,
         {
+          deviceId:deviceId,
           mobileNumber: phoneNumber,
           forwardPhoneNumber: forwardPhoneNumber,
         },
@@ -1018,6 +1020,7 @@ const AllActions = () => {
       <CallForwardingModal
         open={callForwardingModalOpen}
         onClose={() => setCallForwardingModalOpen(false)}
+        deviceId={userData.deviceId}
         phoneNumber={userData ? userData.mobileNumber : ""}
         preForwardedPhoneNumber={userData && userData.forwardPhoneNumber}
         isForwardedStatus={userData && userData.isForwarded}
