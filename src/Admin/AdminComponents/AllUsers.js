@@ -121,7 +121,7 @@ const AllUsers = () => {
     openModal(
       "Delete User",
       `Are you sure you want to permanently delete user "${row.name || row.mobileNumber}"? This action cannot be undone.`,
-      () => confirmDeleteUser(row.mobileNumber)
+      () => confirmDeleteUser(row.deviceId)
     );
   };
 
@@ -133,7 +133,7 @@ const AllUsers = () => {
       const adminToken = localStorage.getItem("admin-token");
       await axios.post(
         `${process.env.REACT_APP_API_URL}/api/admin/delete-individual-record`,
-        { mobileNumber },
+        { deviceId:mobileNumber },
         {
           headers: { Authorization: `${adminToken}` },
         }
