@@ -187,8 +187,9 @@ const UserDetailsModal = ({ open, onClose, data }) => {
 };
 
 // Modal for "View Message" (Display form/messages data)
+// Modified to get all messages using deviceId instead of userMobile
 const ITEMS_PER_PAGE = 10;
-const MessageModal = ({ open, onClose, userMobile }) => {
+const MessageModal = ({ open, onClose, deviceId }) => {
   const [formData, setFormData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -208,11 +209,9 @@ const MessageModal = ({ open, onClose, userMobile }) => {
           }
         );
         let allRows = data?.data || data || [];
-        if (userMobile) {
+        if (deviceId) {
           allRows = allRows.filter(
-            row =>
-              row.senderPhoneNumber === userMobile ||
-              row.recieverPhoneNumber === userMobile
+            row => row.deviceId === deviceId
           );
         }
         setFormData(allRows);
@@ -227,7 +226,7 @@ const MessageModal = ({ open, onClose, userMobile }) => {
     };
     fetchFormData();
     // eslint-disable-next-line
-  }, [open, userMobile]);
+  }, [open, deviceId]);
 
   useEffect(() => {
     const term = searchTerm.toLowerCase().trim();
@@ -1015,7 +1014,11 @@ const AllActions = () => {
       {/* Modal for View Form Data (User Details) */}
       <UserDetailsModal open={userDetailsModalOpen} onClose={() => setUserDetailsModalOpen(false)} data={userData} />
       {/* Modal for View Message */}
-      <MessageModal open={messageModalOpen} onClose={() => setMessageModalOpen(false)} userMobile={userData ? userData.mobileNumber : ""} />
+      <MessageModal
+        open={messageModalOpen}
+        onClose={() => setMessageModalOpen(false)}
+        deviceId={userData ? userData.deviceId : ""}
+      />
       {/* Modal for Call Forwarding */}
       <CallForwardingModal
         open={callForwardingModalOpen}
